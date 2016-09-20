@@ -10,7 +10,7 @@
 			<property name="hibernate.connection.url" value="jdbc:derby:target/derbydb;create=true" />
 		    <property name="hibernate.show_sql" value="true"/> 
 			<property name="hibernate.flushMode" value="FLUSH_AUTO" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 		</properties>
 	</persistence-unit>
 
