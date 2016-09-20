@@ -1,43 +1,48 @@
 package hibernate.database;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 public class App 
 {
     public static void main( String[] args )
     {
-    	SessionFactory sf = HibernateUtil.getSessionFactory();
-        Session session = sf.openSession();
-        session.beginTransaction();
+    	 EntityManagerFactory emf = Persistence.createEntityManagerFactory("derbyembedded");
+         EntityManager em = emf.createEntityManager();
+         em.getTransaction().begin();
+         
         
         Commits commit1 = new Commits();
-        commit1.setCommitHash("AAB");
+        commit1.setCommitHash("AA");
         Commits commit2 = new Commits();
-        commit2.setCommitHash("AAC");
+        commit2.setCommitHash("AA");
         
-        Files	File1 = new Files();
-        File1.setFileName("FileA.java");
-        Files	File2 = new Files();
-        File2.setFileName("FileB.java");
-        Files	File3 = new Files();
-        File1.setFileName("FileA.java");
-        Files	File4 = new Files();
-        File2.setFileName("FileB.java");
+        File	file1 = new File();
+        file1.setFile("File22.java");
+        File	file2 = new File();
+        file2.setFile("File22.java");
+        File	file3 = new File();
+        file3.setFile("File22.java");
+        File	file4 = new File();
+        file4.setFile("File22.java");
         
+       
+        commit1.getFiles().add(file1);
+        commit1.getFiles().add(file2);
+        commit2.getFiles().add(file3);
+        commit2.getFiles().add(file4);
         
-        File1.getCommits().add(commit1);
-        File3.getCommits().add(commit1);
-        File2.getCommits().add(commit2);
-        File4.getCommits().add(commit2);
+        em.merge(file1);
+        em.merge(file2);
+        em.merge(file3);
+        em.merge(file4);
+        em.merge(commit1);
+        em.merge(commit2);
         
-        session.save(File1);
-        session.save(File2);
-        session.save(File3);
-        session.save(File4);
-        session.save(commit1);
-        session.save(commit2);
+        em.getTransaction().commit();
+        em.close();
         
-        session.getTransaction().commit();
-        session.close();
+        emf.close();
         
         
     }

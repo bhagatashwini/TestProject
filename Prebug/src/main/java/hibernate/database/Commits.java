@@ -5,25 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 @Entity
-@Table(name="FILES")
 public class Commits {
 	private int commitId;
 	private String commitHash;
-	private	List<Files> files = new ArrayList<Files>() ;
-
+	private	List<File> files = new ArrayList<File>() ;
+//	private int addedLines;
+//	private int deletedLines;
+//	private int modeifiedLines;
+//	private String Author;
+//	private String Timestamp;
+	
+	
 	@Id
 	@GeneratedValue
-	@Column(name="COMMIT_ID")
 	public int getCommitId(){
 		return commitId;
 	}
@@ -31,7 +31,6 @@ public class Commits {
 		return this.commitId = commitId;
 	}
 	
-	@Column(name="COMMIT_HASH")
 	public String getCommitHash(){
 		return commitHash;
 	}
@@ -40,12 +39,10 @@ public class Commits {
 	}
 	
 	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="FILES_COMMITS",joinColumns ={@JoinColumn(name="COMMIT_ID")}, 
-				inverseJoinColumns={@JoinColumn(name="FILE_ID")})
-	public List<Files> getFiles(){
+	public List<File> getFiles(){
 		return files;
 	}
-	public List<Files> setCommits(List<Files> files){
+	public List<File> setFiles(List<File> files){
 		return this.files = files;
 	}
 
